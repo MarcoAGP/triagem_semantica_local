@@ -4,7 +4,7 @@ Triagem assistida de referências bibliográficas sobre **Instagram, marketing d
 
 O programa lê títulos e resumos de um CSV, calcula proximidades semânticas, aplica regras de classificação e gera uma planilha Excel para auditoria e revisão humana. O escopo inclui serviços de apoio e assistência ao estudante, com aplicação em pesquisas sobre Centros de Assuntos Estudantis (CAEST).
 
-> A classificação é uma sugestão heurística. Similaridade semântica não é probabilidade de elegibilidade nem comprovação de que um estudo atende aos critérios de uma revisão. A decisão científica final depende da leitura e avaliação humana.
+> A classificação é uma sugestão heurística. Similaridade semântica não é probabilidade de elegibilidade nem comprovação de que um estudo atende aos critérios de uma revisão. A decisão científica final depende da leitura e avaliação do pesquisador.
 
 ## Sumário
 
@@ -23,12 +23,12 @@ O programa lê títulos e resumos de um CSV, calcula proximidades semânticas, a
 
 ## Arquivos do repositório
 
-| Arquivo | Finalidade |
-|---|---|
-| `README.md` | Documentação do projeto |
-| [`artigos.csv`](artigos.csv) | Referências bibliográficas usadas como entrada |
-| [`triagem_semantica_local_v3_assuntos_estudantis.py`](triagem_semantica_local_v3_assuntos_estudantis.py) | Script de processamento e exportação |
-| `triagem_semantica_local_final.xlsx` | Saída gerada pela execução; não é necessária para iniciar |
+| Arquivo                                                                                                  | Finalidade                                                |
+| -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| `README.md`                                                                                              | Documentação do projeto                                   |
+| [`artigos.csv`](artigos.csv)                                                                             | Referências bibliográficas usadas como entrada            |
+| [`triagem_semantica_local_v3_assuntos_estudantis.py`](triagem_semantica_local_v3_assuntos_estudantis.py) | Script de processamento e exportação                      |
+| `triagem_semantica_local_final.xlsx`                                                                     | Saída gerada pela execução; não é necessária para iniciar |
 
 Mantenha o CSV e o script **na mesma pasta**. Os caminhos de entrada e saída são resolvidos a partir da localização do próprio script, e não da pasta atual do terminal.
 
@@ -54,38 +54,38 @@ O programa não faz busca bibliográfica, download de PDFs, tradução ou treina
 
 A inspeção do CSV anexado para esta documentação identificou:
 
-| Indicador | Quantidade |
-|---|---:|
-| Registros | 822 |
-| Colunas | 17 |
-| Títulos vazios | 0 |
-| Resumos vazios | 207 |
-| DOI vazio | 109 |
-| Idioma não informado | 587 |
+| Indicador            | Quantidade |
+| -------------------- | ---------: |
+| Registros            |        822 |
+| Colunas              |         17 |
+| Títulos vazios       |          0 |
+| Resumos vazios       |        207 |
+| DOI vazio            |        109 |
+| Idioma não informado |        587 |
 
 Esses números descrevem a entrada, **não resultados da classificação**. Não representam necessariamente 822 estudos únicos: o script não remove duplicatas. Ao substituir o CSV, os totais podem mudar.
 
 ### Dicionário de dados
 
-| Coluna | Conteúdo | Utilização pelo script |
-|---|---|---|
-| `title` | Título | Texto analisado; coluna obrigatória ou equivalente |
-| `authors` | Autores | Preservado |
-| `publication_date` | Data de publicação | Preservado |
-| `doi` | Identificador DOI | Preservado |
-| `url` | Página do artigo | Preservado |
-| `pdf_url` | Endereço do PDF | Preservado; não é acessado |
-| `language` | Idioma informado | Preservado; não seleciona o modelo |
-| `paper_type` | Tipo de publicação | Preservado |
-| `keywords` | Palavras-chave | Preservado; não entra no texto analisado |
-| `found_in` | Fontes de recuperação | Preservado |
-| `database_count` | Quantidade de bases registrada na entrada | Preservado |
-| `citations` | Contagem de citações fornecida | Preservado |
-| `is_open_access` | Indicador de acesso aberto | Preservado |
-| `is_retracted` | Indicador de retratação | Preservado; não gera exclusão automática |
-| `reference_count` | Contagem de referências fornecida | Preservado |
-| `cited_by_count` | Contagem de citações recebidas fornecida | Preservado |
-| `abstract` | Resumo | Texto analisado, quando disponível |
+| Coluna             | Conteúdo                                  | Utilização pelo script                             |
+| ------------------ | ----------------------------------------- | -------------------------------------------------- |
+| `title`            | Título                                    | Texto analisado; coluna obrigatória ou equivalente |
+| `authors`          | Autores                                   | Preservado                                         |
+| `publication_date` | Data de publicação                        | Preservado                                         |
+| `doi`              | Identificador DOI                         | Preservado                                         |
+| `url`              | Página do artigo                          | Preservado                                         |
+| `pdf_url`          | Endereço do PDF                           | Preservado; não é acessado                         |
+| `language`         | Idioma informado                          | Preservado; não seleciona o modelo                 |
+| `paper_type`       | Tipo de publicação                        | Preservado                                         |
+| `keywords`         | Palavras-chave                            | Preservado; não entra no texto analisado           |
+| `found_in`         | Fontes de recuperação                     | Preservado                                         |
+| `database_count`   | Quantidade de bases registrada na entrada | Preservado                                         |
+| `citations`        | Contagem de citações fornecida            | Preservado                                         |
+| `is_open_access`   | Indicador de acesso aberto                | Preservado                                         |
+| `is_retracted`     | Indicador de retratação                   | Preservado; não gera exclusão automática           |
+| `reference_count`  | Contagem de referências fornecida         | Preservado                                         |
+| `cited_by_count`   | Contagem de citações recebidas fornecida  | Preservado                                         |
+| `abstract`         | Resumo                                    | Texto analisado, quando disponível                 |
 
 As contagens bibliográficas são aceitas como fornecidas; o programa não valida sua atualização, origem ou equivalência entre bases.
 
@@ -95,10 +95,10 @@ A leitura utiliza `pd.read_csv(INPUT_FILE, encoding="utf-8-sig")`: separador pad
 
 O reconhecimento de colunas primeiro tenta correspondência exata, ignorando maiúsculas/minúsculas e espaços externos; depois procura nomes que contenham os termos candidatos.
 
-| Campo | Nomes reconhecidos |
-|---|---|
+| Campo  | Nomes reconhecidos                           |
+| ------ | -------------------------------------------- |
 | Título | `title`, `titulo`, `título`, `article title` |
-| Resumo | `abstract`, `resumo`, `summary` |
+| Resumo | `abstract`, `resumo`, `summary`              |
 
 A ausência da coluna de título interrompe a execução. Um resumo vazio é tratado como texto vazio. Se a coluna inteira de resumo estiver ausente, há um comportamento específico descrito em [Limitações conhecidas](#limitações-conhecidas).
 
@@ -108,15 +108,15 @@ A ausência da coluna de título interrompe a execução. Um resumo vazio é tra
 
 O material de instalação fornecido registra a seguinte combinação. Ela é apresentada como referência histórica do projeto, não como garantia de compatibilidade com todos os sistemas:
 
-| Componente | Versão registrada |
-|---|---|
-| Python | 3.11, com 3.11.16 relatado no material |
-| NumPy | 1.26.4 |
-| PyTorch | 2.2.2 |
-| Transformers | 4.40.2 |
-| Sentence Transformers | 2.7.0 |
-| pandas | Não fixada no material |
-| openpyxl | Não fixada no material |
+| Componente            | Versão registrada                      |
+| --------------------- | -------------------------------------- |
+| Python                | 3.11, com 3.11.16 relatado no material |
+| NumPy                 | 1.26.4                                 |
+| PyTorch               | 2.2.2                                  |
+| Transformers          | 4.40.2                                 |
+| Sentence Transformers | 2.7.0                                  |
+| pandas                | Não fixada no material                 |
+| openpyxl              | Não fixada no material                 |
 
 É necessário ter Python instalado e espaço para o ambiente e os arquivos do modelo. A disponibilidade dos pacotes depende do sistema operacional, da arquitetura e do interpretador. GPU não é um requisito do script; a seleção de dispositivo é delegada ao Sentence Transformers.
 
@@ -214,22 +214,22 @@ Os trechos locais usam outra regra: a maior similaridade com qualquer protótipo
 
 ### 3. Eixos e papéis
 
-| Eixo | Conceito representado |
-|---|---|
-| `INSTAGRAM` | Uso do Instagram em comunicação e marketing |
-| `ASSUNTOS_ESTUDANTIS` | Assistência, apoio, serviços e assuntos estudantis |
-| `MARKETING` | Marketing digital e estratégias de marketing |
-| `REDES_SOCIAIS` | Plataformas e estratégias de mídias sociais |
-| `PROMOÇÃO` | Divulgação, promoção de serviços, comunicação e engajamento |
+| Eixo                  | Conceito representado                                       |
+| --------------------- | ----------------------------------------------------------- |
+| `INSTAGRAM`           | Uso do Instagram em comunicação e marketing                 |
+| `ASSUNTOS_ESTUDANTIS` | Assistência, apoio, serviços e assuntos estudantis          |
+| `MARKETING`           | Marketing digital e estratégias de marketing                |
+| `REDES_SOCIAIS`       | Plataformas e estratégias de mídias sociais                 |
+| `PROMOÇÃO`            | Divulgação, promoção de serviços, comunicação e engajamento |
 
 As regras são avaliadas nesta ordem:
 
-| Papel | Condição |
-|---|---|
-| `CENTRAL` | Score ≥ 0,52 **e** score ≥ média dos cinco eixos + 0,035 |
-| `SECUNDÁRIO` | Não passou na regra anterior e score ≥ 0,43 |
-| `INCIDENTAL` | Não passou nas anteriores e score ≥ 0,36 |
-| `AUSENTE` | Score < 0,36 |
+| Papel        | Condição                                                 |
+| ------------ | -------------------------------------------------------- |
+| `CENTRAL`    | Score ≥ 0,52 **e** score ≥ média dos cinco eixos + 0,035 |
+| `SECUNDÁRIO` | Não passou na regra anterior e score ≥ 0,43              |
+| `INCIDENTAL` | Não passou nas anteriores e score ≥ 0,36                 |
+| `AUSENTE`    | Score < 0,36                                             |
 
 Um eixo com score acima de 0,52 pode continuar `SECUNDÁRIO` se não superar a média pela margem exigida. Os cinco papéis são calculados, mas a saída exporta papel/score explicitamente apenas para Instagram e assuntos estudantis.
 
@@ -242,12 +242,12 @@ MP = máximo(score de MARKETING, score de PROMOÇÃO)
 Relevância temática = (score de INSTAGRAM + score de ASSUNTOS_ESTUDANTIS + MP) / 3
 ```
 
-| Grau | Intervalo do score temático |
-|---|---|
-| `MUITO ALTA` | ≥ 0,50 |
-| `ALTA` | ≥ 0,43 e < 0,50 |
-| `MÉDIA` | ≥ 0,36 e < 0,43 |
-| `BAIXA` | < 0,36 |
+| Grau         | Intervalo do score temático |
+| ------------ | --------------------------- |
+| `MUITO ALTA` | ≥ 0,50                      |
+| `ALTA`       | ≥ 0,43 e < 0,50             |
+| `MÉDIA`      | ≥ 0,36 e < 0,43             |
+| `BAIXA`      | < 0,36                      |
 
 Esse score organiza proximidade temática; não determina sozinho a elegibilidade.
 
@@ -255,13 +255,13 @@ Esse score organiza proximidade temática; não determina sozinho a elegibilidad
 
 A categoria bruta é a categoria de maior score entre os protótipos A1–D.
 
-| Categoria | Intenção temática dos protótipos |
-|---|---|
-| A1 | Instagram como objeto principal em assuntos estudantis, marketing e promoção |
-| A2 | Instagram como canal de uma estratégia mais ampla de redes sociais em assuntos estudantis |
-| B | Redes sociais, marketing e promoção em serviços estudantis |
-| C | Instagram e assuntos estudantis, sem foco específico em marketing |
-| D | Marketing e promoção de serviços estudantis sem Instagram |
+| Categoria | Intenção temática dos protótipos                                                          |
+| --------- | ----------------------------------------------------------------------------------------- |
+| A1        | Instagram como objeto principal em assuntos estudantis, marketing e promoção              |
+| A2        | Instagram como canal de uma estratégia mais ampla de redes sociais em assuntos estudantis |
+| B         | Redes sociais, marketing e promoção em serviços estudantis                                |
+| C         | Instagram e assuntos estudantis, sem foco específico em marketing                         |
+| D         | Marketing e promoção de serviços estudantis sem Instagram                                 |
 
 Em seguida, aplicam-se as regras, nesta ordem:
 
@@ -276,13 +276,13 @@ A regra A1 → A2 não compara diretamente se o score de redes sociais é maior 
 
 Cada requisito abaixo é considerado atendido quando seu score é ≥ 0,36:
 
-| Categoria final | Requisitos |
-|---|---|
-| A1 | Instagram, assuntos estudantis e MP |
-| A2 | Instagram, assuntos estudantis, redes sociais e MP |
-| B | Assuntos estudantis, redes sociais e MP |
-| C | Instagram e assuntos estudantis |
-| D | Assuntos estudantis e MP |
+| Categoria final | Requisitos                                         |
+| --------------- | -------------------------------------------------- |
+| A1              | Instagram, assuntos estudantis e MP                |
+| A2              | Instagram, assuntos estudantis, redes sociais e MP |
+| B               | Assuntos estudantis, redes sociais e MP            |
+| C               | Instagram e assuntos estudantis                    |
+| D               | Assuntos estudantis e MP                           |
 
 Todos atendidos: `CONSISTENTE`. Pelo menos metade: `PARCIAL`. Menos da metade: `INCONSISTENTE`. `FORA_DO_ESCOPO` recebe `INCONSISTENTE` diretamente.
 
@@ -297,14 +297,14 @@ Para Instagram, assuntos estudantis e MP, o programa exporta o trecho de maior s
 
 ### 8. Elegibilidade e utilidade
 
-| Categoria/condição | Elegibilidade inicial | Utilidade teórica |
-|---|---|---|
-| A1 ou A2 consistente | `ELEGÍVEL` | `NÚCLEO PRINCIPAL` |
-| A1 ou A2 parcial/inconsistente | `POTENCIALMENTE_ELEGÍVEL` | `NÚCLEO PRINCIPAL` |
-| B | `POTENCIALMENTE_ELEGÍVEL` | `RELACIONADO` |
-| C | `REVISÃO_HUMANA` | `RELACIONADO` |
-| D | `NÃO_ELEGÍVEL` | `CONTEXTUAL (FUNDAMENTAÇÃO)` |
-| Fora do escopo | `NÃO_ELEGÍVEL` | `DESCARTAR` |
+| Categoria/condição             | Elegibilidade inicial     | Utilidade teórica            |
+| ------------------------------ | ------------------------- | ---------------------------- |
+| A1 ou A2 consistente           | `ELEGÍVEL`                | `NÚCLEO PRINCIPAL`           |
+| A1 ou A2 parcial/inconsistente | `POTENCIALMENTE_ELEGÍVEL` | `NÚCLEO PRINCIPAL`           |
+| B                              | `POTENCIALMENTE_ELEGÍVEL` | `RELACIONADO`                |
+| C                              | `REVISÃO_HUMANA`          | `RELACIONADO`                |
+| D                              | `NÃO_ELEGÍVEL`            | `CONTEXTUAL (FUNDAMENTAÇÃO)` |
+| Fora do escopo                 | `NÃO_ELEGÍVEL`            | `DESCARTAR`                  |
 
 Depois dessa atribuição:
 
@@ -315,30 +315,30 @@ Logo, um artigo pode aparecer simultaneamente em “Fora do Escopo”, “Falsos
 
 ## Planilha de saída
 
-| Aba | Conteúdo |
-|---|---|
-| `Triagem Completa` | Todos os registros, metadados originais e campos calculados |
+| Aba                 | Conteúdo                                                                                             |
+| ------------------- | ---------------------------------------------------------------------------------------------------- |
+| `Triagem Completa`  | Todos os registros, metadados originais e campos calculados                                          |
 | `Matriz de Decisão` | Título, resumo quando disponível e seleção dos campos calculados, em ordem decrescente de relevância |
-| `Elegíveis` | Elegibilidade final `ELEGÍVEL` |
-| `Potenciais` | Elegibilidade final `POTENCIALMENTE_ELEGÍVEL` |
-| `Revisão Humana` | Elegibilidade final `REVISÃO_HUMANA` |
-| `Falsos Positivos` | Alerta de falso positivo igual a `SIM` |
-| `Falsos Negativos` | Alerta de falso negativo igual a `SIM` |
-| `Contextuais` | Categoria final D |
-| `Fora do Escopo` | Categoria final `FORA_DO_ESCOPO` |
+| `Elegíveis`         | Elegibilidade final `ELEGÍVEL`                                                                       |
+| `Potenciais`        | Elegibilidade final `POTENCIALMENTE_ELEGÍVEL`                                                        |
+| `Revisão Humana`    | Elegibilidade final `REVISÃO_HUMANA`                                                                 |
+| `Falsos Positivos`  | Alerta de falso positivo igual a `SIM`                                                               |
+| `Falsos Negativos`  | Alerta de falso negativo igual a `SIM`                                                               |
+| `Contextuais`       | Categoria final D                                                                                    |
+| `Fora do Escopo`    | Categoria final `FORA_DO_ESCOPO`                                                                     |
 
 As abas são recortes sobrepostos; não some suas contagens para calcular o total de estudos. A aba principal mantém a ordem da entrada; apenas a matriz é explicitamente ordenada por relevância. Abas sem correspondências ainda são gravadas com cabeçalhos.
 
 ### Campos acrescentados
 
-| Grupo | Colunas |
-|---|---|
-| Relevância | `Relevância temática (Score)`, `Relevância temática (Grau)` |
-| Classificação | `Categoria Semântica Bruta`, `Categoria Final`, `Motivo da decisão`, `Consistência` |
-| Encaminhamento | `Elegibilidade`, `Utilidade teórica` |
-| Alertas | `Falso Positivo Provável`, `Falso Negativo Provável`, `Contexto negativo dominante`, `Score contexto negativo` |
-| Eixos | `INSTAGRAM (Papel/Score)`, `ASSUNTOS_EST. (Papel/Score)`, `Score melhor trecho Assuntos Est.`, `MARKETING/PROMO (Score Max)`, `REDES_SOCIAIS (Score)` |
-| Trechos | `Trecho mais próximo: Assuntos Est.`, `Trecho mais próximo: Instagram`, `Trecho mais próximo: Mkt/Promo` |
+| Grupo          | Colunas                                                                                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Relevância     | `Relevância temática (Score)`, `Relevância temática (Grau)`                                                                                           |
+| Classificação  | `Categoria Semântica Bruta`, `Categoria Final`, `Motivo da decisão`, `Consistência`                                                                   |
+| Encaminhamento | `Elegibilidade`, `Utilidade teórica`                                                                                                                  |
+| Alertas        | `Falso Positivo Provável`, `Falso Negativo Provável`, `Contexto negativo dominante`, `Score contexto negativo`                                        |
+| Eixos          | `INSTAGRAM (Papel/Score)`, `ASSUNTOS_EST. (Papel/Score)`, `Score melhor trecho Assuntos Est.`, `MARKETING/PROMO (Score Max)`, `REDES_SOCIAIS (Score)` |
+| Trechos        | `Trecho mais próximo: Assuntos Est.`, `Trecho mais próximo: Instagram`, `Trecho mais próximo: Mkt/Promo`                                              |
 
 São 20 campos calculados adicionais. Com as 17 colunas desta entrada, a aba principal terá 37 colunas se a execução concluir normalmente. A matriz não inclui `Consistência`, embora esse campo esteja na aba principal.
 
@@ -398,19 +398,19 @@ A preparação deste README incluiu inspeção estática do script, validação 
 
 ## Solução de problemas
 
-| Sintoma | Verificação ou ação |
-|---|---|
-| `artigos.csv não encontrado` | Coloque o CSV junto ao script ou ajuste `INPUT_FILE` |
-| Coluna de título não encontrada | Confira cabeçalho e separador; um CSV com ponto e vírgula exige ajuste de `sep` na leitura |
-| `ModuleNotFoundError` | Instale os pacotes usando o Python do ambiente virtual |
-| Instalação feita, mas importação falha | Confira `sys.executable` e use o caminho explícito do ambiente; aliases do terminal podem apontar para outro Python |
-| `No matching distribution found` | Verifique versão do Python, arquitetura e disponibilidade de pacote para o sistema; o ambiente de referência usa Python 3.11 |
-| Erro de incompatibilidade NumPy/PyTorch | Recrie o ambiente isolado com a combinação de referência e execute `python -m pip check` |
-| Falha ao carregar o modelo | Execute primeiro o comando “Preparar o modelo” e confira conexão, cache e permissões |
-| Sem aceleração MPS/CUDA | O script não exige acelerador; a disponibilidade depende do hardware e da instalação |
-| `PermissionError` ao exportar | Feche o Excel aberto e confira permissão de escrita na pasta |
-| Processamento lento ou memória insuficiente | Reduza os lotes; avalie uma amostra separada e considere a quantidade de trechos |
-| Categorias aparentemente incorretas | Revise os textos, os limiares, os protótipos e os alertas; não interprete os rótulos como decisões definitivas |
+| Sintoma                                     | Verificação ou ação                                                                                                          |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| `artigos.csv não encontrado`                | Coloque o CSV junto ao script ou ajuste `INPUT_FILE`                                                                         |
+| Coluna de título não encontrada             | Confira cabeçalho e separador; um CSV com ponto e vírgula exige ajuste de `sep` na leitura                                   |
+| `ModuleNotFoundError`                       | Instale os pacotes usando o Python do ambiente virtual                                                                       |
+| Instalação feita, mas importação falha      | Confira `sys.executable` e use o caminho explícito do ambiente; aliases do terminal podem apontar para outro Python          |
+| `No matching distribution found`            | Verifique versão do Python, arquitetura e disponibilidade de pacote para o sistema; o ambiente de referência usa Python 3.11 |
+| Erro de incompatibilidade NumPy/PyTorch     | Recrie o ambiente isolado com a combinação de referência e execute `python -m pip check`                                     |
+| Falha ao carregar o modelo                  | Execute primeiro o comando “Preparar o modelo” e confira conexão, cache e permissões                                         |
+| Sem aceleração MPS/CUDA                     | O script não exige acelerador; a disponibilidade depende do hardware e da instalação                                         |
+| `PermissionError` ao exportar               | Feche o Excel aberto e confira permissão de escrita na pasta                                                                 |
+| Processamento lento ou memória insuficiente | Reduza os lotes; avalie uma amostra separada e considere a quantidade de trechos                                             |
+| Categorias aparentemente incorretas         | Revise os textos, os limiares, os protótipos e os alertas; não interprete os rótulos como decisões definitivas               |
 
 ## Contribuições e licença
 
