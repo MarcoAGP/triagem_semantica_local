@@ -2,7 +2,7 @@
 
 Triagem assistida de referências bibliográficas sobre **Instagram, marketing digital e assuntos estudantis**, com processamento local em Python e embeddings do modelo **paraphrase-multilingual-MiniLM-L12-v2**.
 
-O programa lê títulos e resumos de um CSV, calcula proximidades semânticas, aplica regras de classificação e gera uma planilha Excel para auditoria e revisão humana. O escopo inclui serviços de apoio e assistência ao estudante, com aplicação em pesquisas sobre Centros de Assuntos Estudantis (CAEST).
+O programa lê títulos e resumos de um CSV, calcula proximidades semânticas, aplica regras de classificação e gera uma planilha Excel para auditoria e revisão do pesquisador. O escopo inclui serviços de apoio e assistência ao estudante, com aplicação em pesquisas sobre Centros de Assuntos Estudantis (CAEST).
 
 > A classificação é uma sugestão heurística. Similaridade semântica não é probabilidade de elegibilidade nem comprovação de que um estudo atende aos critérios de uma revisão. A decisão científica final depende da leitura e avaliação do pesquisador.
 
@@ -16,7 +16,7 @@ O programa lê títulos e resumos de um CSV, calcula proximidades semânticas, a
 - [Como a classificação funciona](#como-a-classificação-funciona)
 - [Planilha de saída](#planilha-de-saída)
 - [Configuração](#configuração)
-- [Revisão humana e reprodutibilidade](#revisão-humana-e-reprodutibilidade)
+- [Revisão do pesquisador e reprodutibilidade](#revisão-do-pesquisador-e-reprodutibilidade)
 - [Limitações conhecidas](#limitações-conhecidas)
 - [Solução de problemas](#solução-de-problemas)
 - [Contribuições e licença](#contribuições-e-licença)
@@ -302,30 +302,30 @@ Para Instagram, assuntos estudantis e MP, o programa exporta o trecho de maior s
 | A1 ou A2 consistente           | `ELEGÍVEL`                | `NÚCLEO PRINCIPAL`           |
 | A1 ou A2 parcial/inconsistente | `POTENCIALMENTE_ELEGÍVEL` | `NÚCLEO PRINCIPAL`           |
 | B                              | `POTENCIALMENTE_ELEGÍVEL` | `RELACIONADO`                |
-| C                              | `REVISÃO_HUMANA`          | `RELACIONADO`                |
+| C                              | `REVISÃO_DO_PESQUISADOR`  | `RELACIONADO`                |
 | D                              | `NÃO_ELEGÍVEL`            | `CONTEXTUAL (FUNDAMENTAÇÃO)` |
 | Fora do escopo                 | `NÃO_ELEGÍVEL`            | `DESCARTAR`                  |
 
 Depois dessa atribuição:
 
-- Um falso positivo provável muda `ELEGÍVEL` ou `POTENCIALMENTE_ELEGÍVEL` para `REVISÃO_HUMANA`, sem alterar a utilidade.
-- Um falso negativo provável recebe `REVISÃO_HUMANA`. Se estiver fora do escopo, sua utilidade passa a `REVISÃO DE POSSÍVEL FALSO NEGATIVO`, mantendo a categoria `FORA_DO_ESCOPO`.
+- Um falso positivo provável muda `ELEGÍVEL` ou `POTENCIALMENTE_ELEGÍVEL` para `REVISÃO_DO_PESQUISADOR`, sem alterar a utilidade.
+- Um falso negativo provável recebe `REVISÃO_DO_PESQUISADOR`. Se estiver fora do escopo, sua utilidade passa a `REVISÃO DE POSSÍVEL FALSO NEGATIVO`, mantendo a categoria `FORA_DO_ESCOPO`.
 
-Logo, um artigo pode aparecer simultaneamente em “Fora do Escopo”, “Falsos Negativos” e “Revisão Humana”.
+Logo, um artigo pode aparecer simultaneamente em “Fora do Escopo”, “Falsos Negativos” e “Revisão do Pesquisador”.
 
 ## Planilha de saída
 
-| Aba                 | Conteúdo                                                                                             |
-| ------------------- | ---------------------------------------------------------------------------------------------------- |
-| `Triagem Completa`  | Todos os registros, metadados originais e campos calculados                                          |
-| `Matriz de Decisão` | Título, resumo quando disponível e seleção dos campos calculados, em ordem decrescente de relevância |
-| `Elegíveis`         | Elegibilidade final `ELEGÍVEL`                                                                       |
-| `Potenciais`        | Elegibilidade final `POTENCIALMENTE_ELEGÍVEL`                                                        |
-| `Revisão Humana`    | Elegibilidade final `REVISÃO_HUMANA`                                                                 |
-| `Falsos Positivos`  | Alerta de falso positivo igual a `SIM`                                                               |
-| `Falsos Negativos`  | Alerta de falso negativo igual a `SIM`                                                               |
-| `Contextuais`       | Categoria final D                                                                                    |
-| `Fora do Escopo`    | Categoria final `FORA_DO_ESCOPO`                                                                     |
+| Aba                      | Conteúdo                                                                                             |
+| ------------------------ | ---------------------------------------------------------------------------------------------------- |
+| `Triagem Completa`       | Todos os registros, metadados originais e campos calculados                                          |
+| `Matriz de Decisão`      | Título, resumo quando disponível e seleção dos campos calculados, em ordem decrescente de relevância |
+| `Elegíveis`              | Elegibilidade final `ELEGÍVEL`                                                                       |
+| `Potenciais`             | Elegibilidade final `POTENCIALMENTE_ELEGÍVEL`                                                        |
+| `Revisão do Pesquisador` | Elegibilidade final `REVISÃO_DO_PESQUISADOR`                                                         |
+| `Falsos Positivos`       | Alerta de falso positivo igual a `SIM`                                                               |
+| `Falsos Negativos`       | Alerta de falso negativo igual a `SIM`                                                               |
+| `Contextuais`            | Categoria final D                                                                                    |
+| `Fora do Escopo`         | Categoria final `FORA_DO_ESCOPO`                                                                     |
 
 As abas são recortes sobrepostos; não some suas contagens para calcular o total de estudos. A aba principal mantém a ordem da entrada; apenas a matriz é explicitamente ordenada por relevância. Abas sem correspondências ainda são gravadas com cabeçalhos.
 
@@ -364,13 +364,13 @@ Os lotes são definidos nas chamadas `model.encode`: 16 documentos e 32 trechos.
 
 Os limites do grau de relevância (0,50/0,43/0,36) e a margem de contexto negativo (0,05) estão escritos diretamente na lógica. Alterar apenas as constantes dos eixos não atualiza automaticamente todos esses números.
 
-## Revisão humana e reprodutibilidade
+## Revisão do pesquisador e reprodutibilidade
 
 1. Preserve uma cópia do CSV original e registre o commit do script utilizado.
 2. Revise registros sem resumo e eventuais duplicatas antes de interpretar os resultados.
 3. Inspecione os alertas e compare os trechos com o resumo e, quando necessário, com o texto completo.
 4. Confira os candidatos elegíveis segundo critérios explícitos da pesquisa.
-5. Registre a decisão humana em uma cópia da planilha, com motivo, responsável e data.
+5. Registre a decisão do pesquisador em uma cópia da planilha, com motivo, responsável e data.
 6. Avalie os limiares em uma amostra rotulada por pessoas antes de adotá-los como parte do protocolo.
 
 Para registrar as dependências resolvidas:
@@ -381,7 +381,7 @@ python -m pip freeze > requirements-lock.txt
 
 Esse comando cria um arquivo adicional opcional; ele não acompanha necessariamente o repositório. Registre também sistema operacional, arquitetura, versão do Python, dispositivo e revisão do modelo utilizada. O script fixa o nome do modelo, mas não uma revisão específica de seus arquivos.
 
-Uma formulação metodológica possível é: “Foi realizada triagem assistida por similaridade semântica entre títulos/resumos e protótipos temáticos, com regras heurísticas de categorização e encaminhamento para revisão humana.” Não trate os scores como precisão, sensibilidade ou confiança estatisticamente validada sem uma avaliação independente.
+Uma formulação metodológica possível é: “Foi realizada triagem assistida por similaridade semântica entre títulos/resumos e protótipos temáticos, com regras heurísticas de categorização e encaminhamento para revisão do pesquisador.” Não trate os scores como precisão, sensibilidade ou confiança estatisticamente validada sem uma avaliação independente.
 
 ## Limitações conhecidas
 
@@ -414,6 +414,6 @@ A preparação deste README incluiu inspeção estática do script, validação 
 
 ## Contribuições e licença
 
-Melhorias úteis incluem corrigir o fallback sem resumo, tratar entradas vazias, adicionar parâmetros de linha de comando, exportar todos os scores e avaliar a classificação contra uma amostra humana de referência. Ao propor uma mudança, descreva seu efeito metodológico e compare resultados sobre a mesma entrada.
+Melhorias úteis incluem corrigir o fallback sem resumo, tratar entradas vazias, adicionar parâmetros de linha de comando, exportar todos os scores e avaliar a classificação contra uma amostra do pesquisador de referência. Ao propor uma mudança, descreva seu efeito metodológico e compare resultados sobre a mesma entrada.
 
 Nenhum arquivo de licença foi fornecido com os materiais analisados. Defina uma licença em `LICENSE` antes de declarar condições de reutilização do código. A disponibilização dos metadados e resumos deve observar as condições de suas fontes; a licença do código não determina automaticamente os direitos sobre esses textos.
