@@ -106,17 +106,17 @@ A ausência da coluna de título interrompe a execução. Um resumo vazio é tra
 
 ### Ambiente de referência
 
-O material de instalação fornecido registra a seguinte combinação. Ela é apresentada como referência histórica do projeto, não como garantia de compatibilidade com todos os sistemas:
+O material de instalação fornecido é apresentado como referência histórica do projeto, não como garantia de compatibilidade com todos os sistemas:
 
-| Componente            | Versão registrada                      |
-| --------------------- | -------------------------------------- |
-| Python                | 3.11, com 3.11.16 relatado no material |
-| NumPy                 | 1.26.4                                 |
-| PyTorch               | 2.2.2                                  |
-| Transformers          | 4.40.2                                 |
-| Sentence Transformers | 2.7.0                                  |
-| pandas                | Não fixada no material                 |
-| openpyxl              | Não fixada no material                 |
+| Componente            | Versão registrada   |
+| --------------------- | ------------------- |
+| Python                | 3.11, com 3.11.16   |
+| NumPy                 | 1.26.4              |
+| PyTorch               | 2.2.2               |
+| Transformers          | 4.40.2              |
+| Sentence Transformers | 2.7.0               |
+| pandas                | Versão mais recente |
+| openpyxl              | Versão mais recente |
 
 É necessário ter Python instalado e espaço para o ambiente e os arquivos do modelo. A disponibilidade dos pacotes depende do sistema operacional, da arquitetura e do interpretador. GPU não é um requisito do script; a seleção de dispositivo é delegada ao Sentence Transformers.
 
@@ -160,7 +160,7 @@ python -m pip check
 python -c "import sys, torch, numpy, pandas, openpyxl, transformers, sentence_transformers; print('Python:', sys.version); print('Executável:', sys.executable); print('NumPy:', numpy.__version__); print('Torch:', torch.__version__); print('Transformers:', transformers.__version__); print('Sentence Transformers:', sentence_transformers.__version__); print('pandas:', pandas.__version__); print('openpyxl:', openpyxl.__version__)"
 ```
 
-Use `__version__` para consultar as versões. O atributo `.version` que aparece em exemplos do material de apoio não é a forma equivalente de obter essas strings.
+Use `__version__` para consultar as versões.
 
 ### 5. Preparar o modelo
 
