@@ -416,4 +416,4 @@ A preparação deste README incluiu inspeção estática do script, validação 
 
 Melhorias úteis incluem corrigir o fallback sem resumo, tratar entradas vazias, adicionar parâmetros de linha de comando, exportar todos os scores e avaliar a classificação contra uma amostra do pesquisador de referência. Ao propor uma mudança, descreva seu efeito metodológico e compare resultados sobre a mesma entrada.
 
-Este projeto está sob a licença MIT. Veja o arquivo [`LICENSE`](LICENSE) para mais detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo [`LICENSE.md`](LICENSE.md) para mais detalhes.
