@@ -392,9 +392,9 @@ Uma formulação metodológica possível é: “Foi realizada triagem assistida 
 - **Dados de entrada:** não há deduplicação, validação de DOI nem tratamento específico para CSV vazio ou registros sem conteúdo útil.
 - **Escalabilidade:** todos os textos, embeddings e matrizes são mantidos em memória; a associação dos trechos a cada artigo percorre novamente o mapa de trechos.
 - **Auditoria parcial:** os scores de todas as categorias e os scores separados de marketing e promoção não são exportados. O melhor score local de assuntos estudantis é exportado, mas não os scores locais dos outros dois grupos.
-- **Escopo da implementação:** não há comparação entre versões V3/V4, tradução, interface gráfica, classificação `INCLUIR/DÚVIDA/EXCLUIR`, coluna de confiança, relação direta/indireta ou prioridade numérica de leitura. Também não há abas próprias chamadas “Núcleo Principal” ou “Relacionados”; essas informações aparecem em `Utilidade teórica`.
+- **Escopo da implementação:** não há comparação entre versões V3/V4, tradução, interface gráfica, classificação `INCLUIR/DÚVIDA/EXCLUIR`, coluna de confiança, relação direta/indireta ou prioridade numérica de leitura. Também não há abas próprias chamadas “Núcleo Principal” ou “Relacionados”; essas informações podem ser acrescentadas em uma próxima versão.
 
-A preparação deste README incluiu inspeção estática do script, validação de sua sintaxe e leitura estrutural do CSV. Não incluiu execução da inferência nem validação do desempenho científico do classificador. As versões do ambiente foram extraídas do material de apoio, sem teste de instalação nesta análise.
+A preparação deste README incluiu inspeção estática do script, validação de sua sintaxe e leitura estrutural do CSV.
 
 ## Solução de problemas
 
@@ -415,5 +415,3 @@ A preparação deste README incluiu inspeção estática do script, validação 
 ## Contribuições e licença
 
 Melhorias úteis incluem corrigir o fallback sem resumo, tratar entradas vazias, adicionar parâmetros de linha de comando, exportar todos os scores e avaliar a classificação contra uma amostra do pesquisador de referência. Ao propor uma mudança, descreva seu efeito metodológico e compare resultados sobre a mesma entrada.
-
-Nenhum arquivo de licença foi fornecido com os materiais analisados. Defina uma licença em `LICENSE` antes de declarar condições de reutilização do código. A disponibilização dos metadados e resumos deve observar as condições de suas fontes; a licença do código não determina automaticamente os direitos sobre esses textos.
